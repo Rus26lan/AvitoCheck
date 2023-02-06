@@ -4,5 +4,5 @@ data class Item(
     val id: String,
     val urlPath: String,
     val description: String,
-    val value: String
+    val value: Int
 )

@@ -6,14 +6,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.rundgrun.databinding.FragmentHomeBinding
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
-import kotlin.coroutines.coroutineContext
+import com.rundgrun.ui.models.Item
 
 class PrimorskiyFragment : Fragment() {
 
@@ -27,16 +25,25 @@ class PrimorskiyFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
         primorskiyViewModel =
             ViewModelProvider(this).get(PrimorskiyViewModel::class.java)
 
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+
         val root: View = binding.root
 
-        val textView: TextView = binding.textHome
-        primorskiyViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-            runLink(it)
+        val adapter = InstrumentRecyclerAdapter(object : ItemActionListeners {
+            override fun onItemDetails(item: Item) {
+
+            }
+        })
+        binding.recyclerView.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        binding.recyclerView.adapter = adapter
+
+        primorskiyViewModel.items.observe(viewLifecycleOwner) {
+            adapter.items = it
+            println(it.size)
         }
         return root
     }
@@ -56,6 +63,6 @@ class PrimorskiyFragment : Fragment() {
             Intent.ACTION_VIEW,
             Uri.parse(url)
         )
-        ContextCompat.startActivity(requireContext(),urlIntent, null)
+        ContextCompat.startActivity(requireContext(), urlIntent, null)
     }
 }
