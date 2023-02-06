@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">AvitoCheck</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="primorskiy">Приморский</string>
+    <string name="pionerskiy">Пионерский</string>
+    <string name="frunsenskiy">Фрунзенский</string>
+</resources>
